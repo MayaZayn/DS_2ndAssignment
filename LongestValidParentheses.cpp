@@ -3,13 +3,10 @@ using namespace std;
 #include "Stack.h"
 #include "Stack.cpp"
 
-int main() {
-    string s;
-    cin >> s;
-
+int longestValidParentheses(string s) {
     Stack<char> stack;
     int ans = 0, cur = 0;
-    for (char c : s) {
+    for (char c: s) {
         if (c == '(') {
             stack.push(c);
         } else if (c == ')' && !stack.isEmpty()) {
@@ -21,8 +18,14 @@ int main() {
         }
     }
     ans = max(ans, cur);
+    return ans;
+}
 
-    cout << ans;
+int main() {
+    string s;
+    cin >> s;
+
+    cout << longestValidParentheses(s);
 
     return 0;
 }
