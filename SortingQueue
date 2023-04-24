@@ -1,0 +1,64 @@
+// 2 ways to sort the queue
+
+#include <iostream>
+#include <queue>
+using namespace std;
+
+int main() {
+    queue<int> q;
+    q.push(3);
+    q.push(15);
+    q.push(2);
+    q.push(4);
+
+    vector<int> v;
+    while (!q.empty()) {
+        v.push_back(q.front());
+        q.pop();
+    }
+
+    sort(v.begin(), v.end());
+    for (int & i : v) {
+        q.push(i);
+    }
+
+    while (!q.empty()) {
+        cout << q.front() << " ";
+        q.pop();
+    }
+
+    cout << '\n';
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+    q.push(9);
+    q.push(1);
+    q.push(2);
+    q.push(1);
+
+    int mx = INT_MIN, sz = q.size();
+    while (sz--) {
+        q.push(q.front());
+        mx = max(mx, q.front());
+        q.pop();
+    }
+
+    v.clear();
+    v.resize(mx + 1);
+    while (!q.empty()) {
+        v[q.front()]++;
+        q.pop();
+    }
+
+    for (int i = 0; i < v.size(); ++i) {
+        while (v[i]--)
+            q.push(i);
+    }
+
+    while (!q.empty()) {
+        cout << q.front() << " ";
+        q.pop();
+    }
+
+    return 0;
+}
