@@ -42,7 +42,7 @@ int main() {
 //    std::cout << c.isExist(9) << '\n';
 //    std::cout << c.isItemAtEqual(6, 4) << '\n';
 
-    c.swap(2, 3);
+    c.swap(0, 6);
     c.print();
 
 //    c.clear();
