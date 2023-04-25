@@ -1,7 +1,5 @@
 #include "CircularLL.h"
 
-/// MAKE SURE INDICES ARE RIGHT!!!!! AND SHALL I DELETE SOMETHING AFTER I AM DONE WITH IT TO AVOID MEMORY LEAK??
-
 template<class T>
 void CircularLL<T>::insertAtHead(T data) {
     Node* tmp = new Node(data);
@@ -11,7 +9,6 @@ void CircularLL<T>::insertAtHead(T data) {
         tail->next = head;
     } else {
         head = tail = tmp;
-        /// What should I do here to make it circular if it has only one element (Shall I keep this line)?
         tail->next = head;
     }
     size++;
@@ -26,7 +23,6 @@ void CircularLL<T>::insertAtEnd(T data) {
         tail->next = head;
     } else {
         head = tail = tmp;
-        /// What should I do here to make it circular if it has only one element (Shall I keep this line)?
         tail->next = head;
     }
     size++;
@@ -59,11 +55,12 @@ void CircularLL<T>::removeAtHead() {
         throw std::out_of_range("CircularLinkedList is empty");
     }
     if (size == 1) {
-        /// Is this how to remove the only element in the list??
+        delete head;
         head = tail = nullptr;
     } else {
         Node* tmp = head;
         head = head->next;
+        tail->next = head;
         delete tmp;
     }
     size--;
@@ -75,7 +72,7 @@ void CircularLL<T>::removeAtEnd() {
         throw std::out_of_range("CircularLinkedList is empty");
     }
     if (size == 1) {
-        /// Is this how to remove the only element in the list??
+        delete head;
         head = tail = nullptr;
     } else {
         Node *cur = head, *tmp;
@@ -167,27 +164,52 @@ bool CircularLL<T>::isItemAtEqual(T data, int index) {
 template<class T>
 void CircularLL<T>::swap(int index1, int index2) {
     if (index1 < size && index2 < size) {
-        ///handle if any index or both is head or tail and consecutive elements!
+        if (index1 == index2) { return; }
 
-        //If both aren't head or tail and not consecutive elements
-        Node *cur1 = head, *cur2 = head;
+        if (index1 > index2) {
+            int tmp = index1;
+            index1 = index2;
+            index2 = tmp;
+        }
+
+        Node *firstPrev = head, *secondPrev = head;
         //getting the element before the first index
         for (int i = 0; i < index1 - 1; ++i) {
-            cur1 = cur1->next;
+            firstPrev = firstPrev->next;
         }
         //getting the element before the second index
         for (int i = 0; i < index2 - 1; ++i) {
-            cur2 = cur2->next;
+            secondPrev = secondPrev->next;
+        }
+        if (index1 == 0)
+            firstPrev = tail;
+
+        Node *first = firstPrev->next, *second = secondPrev->next;
+
+        if (first == head) {  // handle if first index is head
+            head = second;
+        } else if (second == head) {  // handle if second index is head
+            head = first;
+        }
+        if (first == tail) {  // handle if first index is tail
+            tail = second;
+        } else if (second == tail) {  // handle if second index is tail
+            tail = first;
         }
 
-        Node *firstPrev = cur1, *el1 = cur1->next, *firstNext = cur1->next->next,
-        *secondPrev = cur2, *el2 = cur2->next, *secondNext = cur2->next->next;
+        if (abs(index1 - index2) != 1) {  //If not consecutive elements
+            Node *firstNext = first->next, *secondNext = second->next;
+            firstPrev->next = second;
+            secondPrev->next = first;
+            first->next = secondNext;
+            second->next = firstNext;
+        } else {  //If consecutive elements
+            firstPrev->next = second;
+            first->next = second->next;
+            second->next = first;
+        }
 
-        //swapping the elements
-        firstPrev->next = el2;
-        secondPrev->next = el1;
-        el1->next = secondNext;
-        el2->next = firstNext;
+        tail->next = head;
 
     } else {
         throw std::out_of_range("Index out of range");
@@ -217,4 +239,9 @@ void CircularLL<T>::clear() {
 template<class T>
 int CircularLL<T>::CircularLLSize() {
     return size;
+}
+
+template<class T>
+CircularLL<T>::~CircularLL() {
+    clear();
 }
