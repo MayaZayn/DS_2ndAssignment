@@ -1,20 +1,23 @@
 // 3 ways to sort the queue
 
 #include <iostream>
-#include <queue>
+#include <vector>
+#include "queue.h"
+#include "queue.cpp"
+
 using namespace std;
 
 //template <class T>
 //queue<T> sortQueue(queue<T> &q) {
 //    vector<int> v;
-//    while (!q.empty()) {
-//        v.push_back(q.front());
-//        q.pop();
+//    while (!q.isEmpty()) {
+//        v.enqueue_back(q.First());
+//        q.dequeue();
 //    }
 //
 //    sort(v.begin(), v.end());
 //    for (int & i : v) {
-//        q.push(i);
+//        q.enqueue(i);
 //    }
 //    return q;
 //}
@@ -23,20 +26,20 @@ template <class T>
 queue<T> sortQueue(queue<T> &q, int sz) {
     int mx = INT_MIN;
     while (sz--) {
-        q.push(q.front());
-        mx = max(mx, q.front());
-        q.pop();
+        q.enqueue(q.First());
+        mx = max(mx, q.First());
+        q.dequeue();
     }
 
     vector<int> v(mx + 1);
-    while (!q.empty()) {
-        v[q.front()]++;
-        q.pop();
+    while (!q.isEmpty()) {
+        v[q.First()]++;
+        q.dequeue();
     }
 
     for (int i = 0; i < v.size(); ++i) {
         while (v[i]--)
-            q.push(i);
+            q.enqueue(i);
     }
 
     return q;
@@ -44,57 +47,53 @@ queue<T> sortQueue(queue<T> &q, int sz) {
 
 template <class T>
 queue<T> sortQueue(queue<T> &q) {
-    int sz = q.size();
+    int sz = q.queueSize();
     for (int i = 0; i < sz; ++i) {
-        int mnIndx = 0, mnVal = q.front();
+        int mnIndx = 0, mnVal = q.First();
         for (int j = 0; j < sz; ++j) {
-            int cur = q.front();
+            int cur = q.First();
             if (j < sz - i && cur < mnVal) {
-                mnVal = q.front();
+                mnVal = q.First();
                 mnIndx = j;
             }
-            q.pop();
-            q.push(cur);
+            q.dequeue();
+            q.enqueue(cur);
         }
         for (int j = 0; j < sz; ++j) {
             if (j != mnIndx) {
-                q.push(q.front());
+                q.enqueue(q.First());
             }
-            q.pop();
+            q.dequeue();
         }
-        q.push(mnVal);
+        q.enqueue(mnVal);
     }
     return q;
 }
 
 int main() {
     queue<int> q;
-    q.push(3);
-    q.push(15);
-    q.push(2);
-    q.push(4);
+    q.enqueue(3);
+    q.enqueue(15);
+    q.enqueue(2);
+    q.enqueue(4);
 
     sortQueue(q);
-
-    while (!q.empty()) {
-        cout << q.front() << " ";
-        q.pop();
-    }
-
-    cout << '\n';
+    q.print();
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-    q.push(9);
-    q.push(1);
-    q.push(2);
-    q.push(1);
+    q.clear();
 
-    sortQueue(q, q.size());
+    q.enqueue(9);
+    q.enqueue(1);
+    q.enqueue(2);
+    q.enqueue(1);
 
-    while (!q.empty()) {
-        cout << q.front() << " ";
-        q.pop();
+    sortQueue(q, q.queueSize());
+
+    while (!q.isEmpty()) {
+        cout << q.First() << " ";
+        q.dequeue();
     }
 
     return 0;
