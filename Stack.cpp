@@ -9,7 +9,8 @@ void Stack<T>::push(T data) {
 template<class T>
 T Stack<T>::pop() {
     if (isEmpty()) {
-        throw std::out_of_range("Stack is empty");
+        std::cout << "Stack is empty!" << std::endl;
+        throw std::exception();
     }
 
     size--;
@@ -21,7 +22,8 @@ T Stack<T>::pop() {
 template<class T>
 T Stack<T>::top() {
     if (isEmpty()) {
-        throw std::out_of_range("Stack is empty");
+        std::cout << "Stack is empty!" << std::endl;
+        throw std::exception();
     }
     return dataList.front();
 }
@@ -34,7 +36,8 @@ bool Stack<T>::isEmpty() {
 template<class T>
 void Stack<T>::print() {
     if (isEmpty()) {
-        throw std::out_of_range("Stack is empty");
+        std::cout << "Stack is empty!" << std::endl;
+        throw std::exception();
     }
 
     for (auto & item : dataList) {
