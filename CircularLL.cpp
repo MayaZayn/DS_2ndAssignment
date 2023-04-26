@@ -52,7 +52,8 @@ void CircularLL<T>::insertAt(T data, int index) {
 template<class T>
 void CircularLL<T>::removeAtHead() {
     if (isEmpty()) {
-        throw std::out_of_range("CircularLinkedList is empty");
+        std::cout << "CircularLinkedList is empty!" << std::endl;
+        throw std::exception();
     }
     if (size == 1) {
         delete head;
@@ -69,7 +70,8 @@ void CircularLL<T>::removeAtHead() {
 template<class T>
 void CircularLL<T>::removeAtEnd() {
     if (isEmpty()) {
-        throw std::out_of_range("CircularLinkedList is empty");
+        std::cout << "CircularLinkedList is empty!" << std::endl;
+        throw std::exception();
     }
     if (size == 1) {
         delete head;
