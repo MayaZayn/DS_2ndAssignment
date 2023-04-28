@@ -2,7 +2,7 @@
 
 template<class T>
 void Stack<T>::push(T data) {
-    dataList.push_front(data);
+    dataList.insertAtHead(data);
     size++;
 }
 
@@ -14,8 +14,8 @@ T Stack<T>::pop() {
     }
 
     size--;
-    T data = dataList.front();
-    dataList.pop_front();
+    T data = dataList.retrieveAt(0);
+    dataList.removeAtHead();
     return data;
 }
 
@@ -25,7 +25,7 @@ T Stack<T>::top() {
         std::cout << "Stack is empty!" << std::endl;
         throw std::exception();
     }
-    return dataList.front();
+    return dataList.retrieveAt(0);
 }
 
 template<class T>
@@ -40,9 +40,8 @@ void Stack<T>::print() {
         throw std::exception();
     }
 
-    for (auto & item : dataList) {
-        std::cout << item << " ";
-    }
+    dataList.print();
+    cout << endl;
 }
 
 template<class T>
