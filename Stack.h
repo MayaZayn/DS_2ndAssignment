@@ -1,13 +1,14 @@
 #ifndef STACK_H
 #define STACK_H
 
-#include <list>
+#include "SLL.h"
+#include "SLL.cpp"
 #include <iostream>
 
 template<class T>
 class Stack {
 private:
-    std::list<T> dataList;
+    LinkedList<T> dataList;
     int size;
 public:
     Stack() : size(0) {}
