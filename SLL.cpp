@@ -100,20 +100,21 @@ void LinkedList<T>::removeAt(int index) {
 
 template<class T>
 
-T LinkedList<T>::retriveAt(int index) {
+T LinkedList<T>::retrieveAt(int index) {
     Node<T> *ptr = head;
     int cnt = 0;
     int tmp = ptr->data;
     if (index < 0 or index > size - 1) {
         cout << "Wrong index.\n";
-        return;
+        throw exception();
     }
-    while (ptr != NULL) {
-        if (cnt == index) {
-            cout << "The value in this index is: " << ptr->data << std::endl;
-            //return tmp;
-        }
+    while (cnt < index) {
+//        if (cnt == index) {
+//            cout << "The value in this index is: " << ptr->data << std::endl;
+//            //return tmp;
+//        }
         ptr = ptr->next;
+        tmp = ptr->data;
         cnt++;
     }
     return tmp;
@@ -140,12 +141,12 @@ template<class T>
 bool LinkedList<T>::isExist(int val) {
     while (head != NULL) {
         if (head->data == val) {
-            cout << "The value is existing in the list.\n";
+            cout << "The value exists in the list.\n";
             return true;
         }
         head = head->next;
     }
-    cout << "The value is not existing in the list.\n";
+    cout << "The value does not exist in the list.\n";
     return false;
 }
 
@@ -163,7 +164,7 @@ bool LinkedList<T>::isItemAtEqual(int val, int index) {
                 cout << "Yes, this value is equal to the value in the index given.\n";
                 return true;
             } else {
-                cout << "Yes, this value is not equal to the value in the index given.\n";
+                cout << "No, this value is not equal to the value in the index given.\n";
                 return false;
             }
         }
@@ -209,10 +210,10 @@ void LinkedList<T>::swap(int ItemIndex1, int ItemIndex2) {
 template<class T>
 bool LinkedList<T>::isEmpty() {
     if (head == NULL) {
-        cout << "The linked list is empty.\n";
+//        cout << "The linked list is empty.\n";
         return true;
     } else {
-        cout << "The linked list is not empty.\n";
+//        cout << "The linked list is not empty.\n";
         return false;
     }
 }
@@ -224,7 +225,7 @@ int LinkedList<T>::LinkedListSize() {
         counter++;
         head = head->next;
     }
-    cout << "the linked list size is:" << counter;
+//    cout << "The linked list size is:" << counter;
     return counter;
 }
 
@@ -232,7 +233,7 @@ template<class T>
 void LinkedList<T>::clear() {
     Node<T> *ptr = head;
     while (ptr != NULL) {
-        removeAtTail();
+        removeAtHead();
         ptr = ptr->next;
     }
 }
@@ -259,7 +260,3 @@ istream &operator>>(istream &in, LinkedList<T> &list) {
     }
     return in;
 }
-
-
-
-
