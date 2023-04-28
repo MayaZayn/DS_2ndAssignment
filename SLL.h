@@ -34,7 +34,7 @@ public:
     void removeAtHead();
     void removeAtTail();
     void removeAt(int index);
-    T retriveAt(int index);
+    T retrieveAt(int index);
     void replaceAt(int val, int index);
     bool isExist(int val);
     bool isItemAtEqual(int val, int index);
