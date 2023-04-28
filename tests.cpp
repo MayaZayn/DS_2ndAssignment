@@ -4,7 +4,7 @@
 #include "CircularLL.cpp"
 
 int main() {
-    //LinkedList based Stack (STL)
+    //LinkedList based Stack
 //    Stack<int> s;
 //    s.push(3);
 //    s.push(4);
