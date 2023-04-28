@@ -30,8 +30,8 @@ void LinkedList<T>::insertAtTail(int val) {
             ptr = ptr->next;
         }
         ptr->next = newNode;
-        size++;
     }
+    size++;
 }
 
 template<class T>
@@ -87,9 +87,15 @@ void LinkedList<T>::removeAt(int index) {
         cout << "Wrong index.\n";
         return;
     }
+    if (index == 0)
+    {
+        removeAtHead();
+        return;
+    }
     while (ptr != NULL) {
         if ((index - cnt) == 1) {
             q->next = ptr->next;
+            break;
         }
         q = q->next;
         ptr = q->next;
@@ -156,15 +162,15 @@ bool LinkedList<T>::isItemAtEqual(int val, int index) {
     Node<T> *ptr = head;
     int cnt = 0;
     if (index > size - 1 or index < 0) {
-        cout << "Wrong index.\n";
+        throw out_of_range("Invalid index.");
     }
     while (ptr != NULL) {
         if (cnt == index) {
             if (ptr->data == val) {
-                cout << "Yes, this value is equal to the value in the index given.\n";
+//                 cout << "Yes, this value is equal to the value in the index given.\n";
                 return true;
             } else {
-                cout << "No, this value is not equal to the value in the index given.\n";
+//                 cout << "No, this value is not equal to the value in the index given.\n";
                 return false;
             }
         }
@@ -220,13 +226,7 @@ bool LinkedList<T>::isEmpty() {
 
 template<class T>
 int LinkedList<T>::LinkedListSize() {
-    int counter = 0;
-    while (head != NULL) {
-        counter++;
-        head = head->next;
-    }
-//    cout << "The linked list size is:" << counter;
-    return counter;
+    return size;
 }
 
 template<class T>
