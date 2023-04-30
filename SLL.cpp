@@ -65,15 +65,16 @@ void LinkedList<T>::removeAtHead() {
 
 template<class T>
 void LinkedList<T>::removeAtTail() {
+    Node<T> *tmp = head;
     Node<T> *ptr = head->next;
-    if (head == NULL) {
+    if (tmp == NULL) {
         std::cout << "Error, the linked list is empty.\n";
     }
     while (ptr->next != NULL) {
-        head = head->next;
+        tmp = tmp->next;
         ptr = ptr->next;
     }
-    head->next = NULL;
+    tmp->next = NULL;
     size--;
     delete ptr;
 }
@@ -115,10 +116,6 @@ T LinkedList<T>::retrieveAt(int index) {
         throw exception();
     }
     while (cnt < index) {
-//        if (cnt == index) {
-//            cout << "The value in this index is: " << ptr->data << std::endl;
-//            //return tmp;
-//        }
         ptr = ptr->next;
         tmp = ptr->data;
         cnt++;
