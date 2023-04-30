@@ -12,11 +12,14 @@ private:
         Node() : data(0), next(nullptr) {}
         explicit Node(T data) : data(data), next(nullptr) {}
     };
+
     Node* head;
     Node* tail;
     int size;
+
 public:
     CircularLL() : size(0) {head = tail = nullptr;}
+    ~CircularLL();
     void insertAtHead(T data);
     void insertAtEnd(T data);
     void insertAt(T data, int index);
