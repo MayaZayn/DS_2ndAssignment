@@ -18,12 +18,11 @@ public:
 template <class elementType>
 class DoublyLinkedList
 {
-private:
+public:
     Node<elementType> *head;
     Node<elementType> *tail;
     int count;
-
-public:
+    
     DoublyLinkedList() : head(NULL), tail(NULL), count(0) {}
     void insertAtHead(elementType element);
     void insertAtTail(elementType element);
