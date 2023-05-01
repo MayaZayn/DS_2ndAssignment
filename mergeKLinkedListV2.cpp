@@ -1,3 +1,6 @@
+//The only difference between this version and mergeKLinkedList.cpp
+//is that this function takes as parameter a vector of heads for the given linked lists.
+
 #include <iostream>
 #include "SLL.h"
 #include "SLL.cpp"
