@@ -179,35 +179,54 @@ bool LinkedList<T>::isItemAtEqual(int val, int index) {
 
 template<class T>
 void LinkedList<T>::swap(int ItemIndex1, int ItemIndex2) {
+    Node<T> *tmp = head;
+    while (tmp->next!=NULL){
+        tmp = tmp->next;
+    }
     if (ItemIndex1 == ItemIndex2) {
         return;
     }
-    Node<T> *prev1 = NULL, *curr1 = head;
-    while (curr1 && curr1->data != ItemIndex1) {
-        prev1 = curr1;
-        curr1 = curr1->next;
+    Node<T> *prevfirst = head, *prevsecond = head;
+    for(int i=0;i<ItemIndex1-1;++i){
+        prevfirst = prevfirst->next;
     }
-    Node<T> *prev2 = NULL, *curr2 = head;
-    while (curr2 && curr2->data != ItemIndex2) {
-        prev2 = curr2;
-        curr2 = curr2->next;
+    for (int i = 0; i < ItemIndex2-1; ++i) {
+        prevsecond = prevsecond->next;
     }
-    if (curr1 == NULL && curr2 == NULL) {
-        return;
+    Node<T> *first=prevfirst->next, *second = prevsecond->next;
+    if (ItemIndex1 == 0){
+        first = head;
+        prevfirst = 0;
+        head = second;
     }
-    if (prev1 != NULL) {
-        prev1->next = curr2;
-    } else {
-        head = curr2;
+    if (ItemIndex2 == 0){
+        second = head;
+        prevsecond = 0;
+        head = first;
     }
-    if (prev2 != NULL) {
-        prev2->next = curr1;
-    } else {
-        head = curr1;
+
+    if(first==tmp){
+        tmp = second;
     }
-    Node<T> *temp = curr2->next;
-    curr2->next = curr1->next;
-    curr1->next = temp;
+    else if(second == tmp){
+        tmp = first;
+    }
+
+    if(abs(ItemIndex1-ItemIndex2) == 1){
+        if(prevfirst)
+            prevfirst->next = second;
+        first->next = second->next;
+        second->next =first ;
+    }
+    else {
+        Node<T> *tmpf = first->next;
+        if(prevfirst)
+            prevfirst->next = second;
+        if(prevsecond)
+            prevsecond->next = first;
+        first->next = second->next;
+        second->next = tmpf;
+    }
 }
 
 template<class T>
