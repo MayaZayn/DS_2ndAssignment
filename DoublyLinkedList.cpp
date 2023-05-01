@@ -296,6 +296,23 @@ bool DoublyLinkedList<elementType>::isItemAtEqual(elementType element, int index
 template <class elementType>
 void DoublyLinkedList<elementType>::swap(int firstItemIdx, int secondItemIdx)
 {
+    if (firstItemIdx < 0 || firstItemIdx >= count || secondItemIdx < 0 || secondItemIdx >= count)
+    {
+        throw out_of_range("Index out of range");
+    }
+
+    if (firstItemIdx == secondItemIdx)
+    {
+        return;
+    }
+
+    if (firstItemIdx > secondItemIdx)
+    {
+        int temp = firstItemIdx;
+        firstItemIdx = secondItemIdx;
+        secondItemIdx = temp;
+    }
+
     Node<elementType> *firstItem = head, *secondItem = head;
     for (int i = 1; i <= firstItemIdx; ++i)
     {
@@ -307,9 +324,45 @@ void DoublyLinkedList<elementType>::swap(int firstItemIdx, int secondItemIdx)
         secondItem = secondItem->next;
     }
 
-    elementType temp = firstItem->data;
-    firstItem->data = secondItem->data;
-    secondItem->data = temp;
+    if (firstItemIdx == 0)
+    {
+        head = secondItem;
+    }
+
+    else
+    {
+        firstItem->previous->next = secondItem;
+    }
+
+    if (secondItemIdx == count - 1)
+    {
+        tail = firstItem;
+    }
+    else
+    {
+        secondItem->next->previous = firstItem;
+    }
+
+    if (secondItemIdx - firstItemIdx == 1)
+    {
+        firstItem->next = secondItem->next;
+        secondItem->previous = firstItem->previous;
+        secondItem->next = firstItem;
+        firstItem->next->previous = firstItem;
+    }
+
+    else
+    {
+        firstItem->next->previous = secondItem;
+        secondItem->previous->next = firstItem;
+
+        Node<elementType> *firstItemPrev = firstItem->previous, *firstItemNext = firstItem->next;
+        firstItem->previous = secondItem->previous;
+        firstItem->next = secondItem->next;
+
+        secondItem->previous = firstItemPrev;
+        secondItem->next = firstItemNext;
+    }
 }
 
 template <class elementType>
