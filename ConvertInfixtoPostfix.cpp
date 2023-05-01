@@ -19,11 +19,6 @@ string ConvertInfixtoPosfix(string infix) {
                     stack.push(ch);
                     cnt++;
                 } else {
-//                    if(stack.top()=='('){
-//                        stack.push(ch);
-//                        cnt++;
-//                    }
-
                     while (stack.stackSize() && stack.top() != '(') {
                         output += stack.top();
                         stack.pop();
@@ -36,7 +31,13 @@ string ConvertInfixtoPosfix(string infix) {
                 if (stack.isEmpty()) {
                     stack.push(ch);
                     cnt++;
-                } else if (stack.top() == '+' || stack.top() == '-' || stack.top() == '(') {
+                }
+                else if(stack.top() == '*' or stack.top()=='/'){
+                    output+=stack.top();
+                    stack.pop();
+                    stack.push(ch);
+                }
+                else if (stack.top() == '+' || stack.top() == '-' || stack.top() == '(') {
                     stack.push(ch);
                 } else {
                     while (stack.stackSize()) {
@@ -45,11 +46,16 @@ string ConvertInfixtoPosfix(string infix) {
                     }
                     stack.push(ch);
                 }
-            } else if (ch == '^') {
+            }       else if (ch == '^') {
                 if (stack.isEmpty()) {
                     stack.push(ch);
                     cnt++;
-                } else if (stack.top() == '+' || stack.top() == '-' || stack.top() == '*' || stack.top() == '/' ||
+                }else if(stack.top()=='^'){
+                    output+=stack.top();
+                    stack.pop();
+                    stack.push(ch);
+                }
+                else if (stack.top() == '+' || stack.top() == '-' || stack.top() == '*' || stack.top() == '/' ||
                            stack.top() == '(') {
                     stack.push(ch);
                 } else {
@@ -69,13 +75,18 @@ string ConvertInfixtoPosfix(string infix) {
             }
         }
     }
-    output += stack.top();
+
+    while (stack.stackSize()){
+        output += stack.top();
+        stack.pop();
+    }
     cout << output;
     return output;
 }
 
 int main() {
-    string x="x^y / (5*z) + 2";
+    string x="A+B/C*(D-A)^F^H";
     ConvertInfixtoPosfix(x);
 
 }
+
