@@ -1,6 +1,12 @@
 #include "DoublyLinkedList.h"
 
 template <class elementType>
+Node<elementType> *DoublyLinkedList<elementType>::getHead()
+{
+    return head;
+}
+
+template <class elementType>
 void DoublyLinkedList<elementType>::insertAtHead(elementType element)
 {
     Node<elementType> *newNode = new Node<elementType>;
