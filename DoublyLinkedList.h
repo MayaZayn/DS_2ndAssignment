@@ -24,6 +24,7 @@ public:
     int count;
     
     DoublyLinkedList() : head(NULL), tail(NULL), count(0) {}
+    Node<elementType> *getHead();
     void insertAtHead(elementType element);
     void insertAtTail(elementType element);
     void insertAt(elementType element, int index);
